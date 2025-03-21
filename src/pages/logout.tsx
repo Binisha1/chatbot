@@ -2,7 +2,7 @@ import { useLogout } from "@/hooks/auth";
 import { LogOutIcon } from "lucide-react";
 
 const LogOut = () => {
-  const { logout, isLoading } = useLogout();
+  const { logout } = useLogout();
 
   const userName = localStorage.getItem("username") || "User";
   const initial = userName.charAt(0).toUpperCase();
@@ -19,7 +19,6 @@ const LogOut = () => {
       {/* Logout Icon */}
       <button
         onClick={() => logout()}
-        disabled={isLoading}
         className="ml-5 text-black hover:cursor-pointer"
       >
         <LogOutIcon />

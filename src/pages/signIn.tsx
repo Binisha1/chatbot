@@ -13,7 +13,7 @@ import { useNavigate } from "react-router";
 import { useLogin } from "@/hooks/auth";
 
 const SignIn = () => {
-  const { login, isLoading, error } = useLogin();
+  const { login, error } = useLogin();
   const navigate = useNavigate();
   let err = "";
 
@@ -53,8 +53,8 @@ const SignIn = () => {
             </div>
           </CardContent>
           <CardFooter className="flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Sign In"}
+            <Button type="submit" className="w-full">
+              {"Sign In"}
             </Button>
             {err && <div className=" text-red-500">{err}</div>}
             <p className="text-center text-sm text-muted-foreground">

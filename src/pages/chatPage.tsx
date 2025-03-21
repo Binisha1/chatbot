@@ -71,7 +71,7 @@ export default function ChatPage() {
     }
   };
 
-  const ExtractedContent = ({ content }) => {
+  const ExtractedContent = ({ content }: { content: string }) => {
     const startIndex = content.indexOf("Extracting links...");
     const endIndex = content.indexOf("Extraction complete!");
 
@@ -83,9 +83,9 @@ export default function ChatPage() {
     // Ensure we include "Extraction complete!" fully
     const extractedEndIndex = endIndex + "Extraction complete!".length;
 
-    let before = content.substring(0, startIndex);
-    let extractedPart = content.substring(startIndex, extractedEndIndex);
-    let after = content.substring(extractedEndIndex);
+    const before = content.substring(0, startIndex);
+    const extractedPart = content.substring(startIndex, extractedEndIndex);
+    const after = content.substring(extractedEndIndex);
 
     return (
       <div className="prose prose-sm max-w-none">

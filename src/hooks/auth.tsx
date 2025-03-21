@@ -53,7 +53,6 @@ export const useLogin = () => {
 
   return {
     login: loginMutation.mutateAsync,
-    isLoading: loginMutation.isLoading,
     error: loginMutation.error,
     isSuccess: loginMutation.isSuccess,
   };
@@ -81,7 +80,6 @@ export const useRegister = () => {
 
   return {
     register: registerMutation.mutateAsync,
-    isLoading: registerMutation.isLoading,
     error: registerMutation.error,
     isSuccess: registerMutation.isSuccess,
   };
@@ -107,7 +105,7 @@ export const useLogout = () => {
 
   return {
     logout: logoutMutation.mutate,
-    isLoading: logoutMutation.isLoading,
+
     error: logoutMutation.error,
   };
 };

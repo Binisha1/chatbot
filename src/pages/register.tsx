@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -14,7 +13,7 @@ import { useRegister } from "@/hooks/auth";
 import { useNavigate } from "react-router";
 
 const Register = () => {
-  const { register, isLoading, error } = useRegister();
+  const { register, error } = useRegister();
   const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,7 +28,7 @@ const Register = () => {
 
     try {
       await register({ username, password });
-    } catch (err) {
+    } catch {
       // Error is handled in the hook.
     }
   };
@@ -63,8 +62,8 @@ const Register = () => {
             </div>
           </CardContent>
           <CardFooter className="flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Creating account..." : "Sign Up"}
+            <Button type="submit" className="w-full">
+              {"Sign Up"}
             </Button>
             {error && <div className=" text-red-500">{error.message}</div>}
             <p className="text-center text-sm text-muted-foreground">
