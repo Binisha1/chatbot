@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot, Loader2, Send, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import LogOut from "./logout";
+
+import Markdown from "markdown-to-jsx";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
@@ -26,18 +29,20 @@ export default function ChatPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/chat-stream/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
-      });
+      const response = await fetch(
+        "https://chatapp-fastapi.vercel.app/chat-stream/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: input }),
+        }
+      );
 
       if (!response.body) throw new Error("No response body");
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let botResponse = "";
 
-      // Add a placeholder bot message
       setMessages((prev) => [...prev, { role: "bot", content: "" }]);
 
       while (true) {
@@ -66,14 +71,49 @@ export default function ChatPage() {
     }
   };
 
+  const ExtractedContent = ({ content }) => {
+    const startIndex = content.indexOf("Extracting links...");
+    const endIndex = content.indexOf("Extraction complete!");
+
+    if (startIndex === -1 || endIndex === -1) {
+      // If either phrase is missing, render content normally
+      return <Markdown>{content}</Markdown>;
+    }
+
+    // Ensure we include "Extraction complete!" fully
+    const extractedEndIndex = endIndex + "Extraction complete!".length;
+
+    let before = content.substring(0, startIndex);
+    let extractedPart = content.substring(startIndex, extractedEndIndex);
+    let after = content.substring(extractedEndIndex);
+
+    return (
+      <div className="prose prose-sm max-w-none">
+        {before && <Markdown>{before}</Markdown>}
+
+        {/* Apply background only to the correct section */}
+        {extractedPart && (
+          <div className="bg-gray-200 p-4 rounded-lg">
+            <Markdown>{extractedPart}</Markdown>
+          </div>
+        )}
+
+        {after && <Markdown>{after}</Markdown>}
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col h-screen max-w-3xl mx-auto">
       {/* Header */}
-      <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-3 px-4 sticky top-0 z-10">
+      <header className="border-b py-3 px-4 sticky top-0 z-10">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
           <h1 className="text-xl font-semibold text-primary">
             Chat With Gemini
           </h1>
+          <div>
+            <LogOut />
+          </div>
         </div>
       </header>
 
@@ -125,7 +165,9 @@ export default function ChatPage() {
                     {msg.content ? (
                       <div className="prose prose-sm  max-w-none">
                         {/* <ReactMarkdown>{msg.content}</ReactMarkdown> */}
-                        {msg.content}
+                        <ExtractedContent content={msg.content} />
+                        {/* <Markdown>{msg.content}</Markdown> */}
+                        {/* convert({msg.content}) */}
                       </div>
                     ) : (
                       <div className="flex items-center justify-center h-6">
@@ -142,14 +184,14 @@ export default function ChatPage() {
       </div>
 
       {/* Input area */}
-      <div className="border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4">
+      <div className=" p-4">
         <div className="max-w-5xl mx-auto">
           <div className="relative">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="pr-20 py-6 bg-background border-border/50 focus-visible:ring-primary/20"
+              className="pr-20 py-6 bg-background border-black border-2 focus:outline-none focus:ring-0 focus:border-black"
               onKeyDown={(e) =>
                 e.key === "Enter" && !e.shiftKey && sendMessage()
               }
@@ -158,16 +200,16 @@ export default function ChatPage() {
               onClick={sendMessage}
               disabled={loading || !input.trim()}
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full"
+              className="absolute bg-black right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full"
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <Send className="h-4 w-4" />
+                <Send className="h-4 w-4 bg-black " />
               )}
             </Button>
           </div>
-          <p className="text-xs text-center text-muted-foreground mt-2">
+          <p className="text-xs text-center opacity-50 mt-2">
             Press Enter to send
           </p>
         </div>

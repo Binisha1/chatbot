@@ -3,69 +3,79 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRegister } from "@/hooks/auth";
 import { useNavigate } from "react-router";
-import { useLogin } from "@/hooks/auth";
 
-const SignIn = () => {
-  const { login, isLoading, error } = useLogin();
+const Register = () => {
+  const { register, isLoading, error } = useRegister();
   const navigate = useNavigate();
-  let err = "";
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
+    // Ensure correct field names
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
     if (!username || !password) return;
 
     try {
-      await login({ username, password });
+      await register({ username, password });
     } catch (err) {
-      console.log(err);
+      // Error is handled in the hook.
     }
   };
-  if (error) {
-    err = "Invalid Credential";
-  }
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <Card className="w-80">
-        <form onSubmit={handleSignIn}>
+        <form onSubmit={handleSignUp}>
           <CardHeader>
-            <CardTitle className="text-xl pb-2">Sign In</CardTitle>
+            <CardTitle className="text-xl pb-2">Sign Up</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 pb-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" name="username" type="text" required />
+              <Label htmlFor="signup-username">Username</Label>
+              <Input
+                id="signup-username"
+                name="username" // ✅ Fixed field name
+                placeholder="johndoe"
+                required
+              />
             </div>
+
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" required />
+              <Label htmlFor="signup-password">Password</Label>
+              <Input
+                id="signup-password"
+                name="password"
+                type="password"
+                required
+              />
             </div>
           </CardContent>
           <CardFooter className="flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? "Creating account..." : "Sign Up"}
             </Button>
-            {err && <div className=" text-red-500">{err}</div>}
+            {error && <div className=" text-red-500">{error.message}</div>}
             <p className="text-center text-sm text-muted-foreground">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Button
                 variant="link"
                 className="p-0 h-auto"
                 type="button"
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/")}
               >
-                Sign up
+                Sign in
               </Button>
             </p>
           </CardFooter>
@@ -75,4 +85,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Register;
