@@ -10,7 +10,7 @@ const LogOut = () => {
   return (
     <div className="flex items-center justify-between w-full relative">
       {/* Avatar & Username */}
-      <div className="flex items-center gap-2 cursor-pointer">
+      <div className="flex items-center  cursor-pointer">
         <div className="w-9 h-9 flex items-center justify-center rounded-full text-white font-semibold bg-primary">
           {initial}
         </div>
@@ -19,7 +19,7 @@ const LogOut = () => {
       {/* Logout Icon */}
       <button
         onClick={() => logout()}
-        className="ml-5 text-black hover:cursor-pointer"
+        className="ml-2 text-black hover:cursor-pointer"
       >
         <LogOutIcon />
       </button>
