@@ -20,8 +20,6 @@ const Register = () => {
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    // Ensure correct field names
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
@@ -36,7 +34,6 @@ const Register = () => {
       } else {
         setError("An unknown error occurred");
       }
-      // Error is handled in the hook.
     }
   };
 
