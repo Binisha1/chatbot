@@ -31,7 +31,11 @@ const Register = () => {
       await register({ username, password });
       setError(null);
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
       // Error is handled in the hook.
     }
   };
