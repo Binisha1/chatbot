@@ -101,7 +101,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col lg:h-screen  lg:flex-row justify-between md:pt-5 px-1 lg:px-5">
+    <div className="flex flex-col h-screen  lg:flex-row justify-between md:pt-5 px-1 lg:px-5">
       <h1 className="hidden lg:flex text-xl font-semibold text-primary">
         Chat With Gemini
       </h1>
@@ -116,7 +116,7 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-col h-screen lg:h-auto  pt-15 lg:pt-0 w-full lg:w-3/5 mx-auto">
+      <div className="flex flex-col h-screen  w-full lg:w-3/5 mx-auto">
         {/* Chat container */}
         <div className="flex-1 overflow-hidden  w-full mx-auto px-4 py-1 lg:py-4">
           <ScrollArea className="h-full  pr-5">
