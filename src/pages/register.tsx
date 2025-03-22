@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,8 +13,9 @@ import { useRegister } from "@/hooks/auth";
 import { useNavigate } from "react-router";
 
 const Register = () => {
-  const { register, error } = useRegister();
+  const { register } = useRegister();
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,13 +29,16 @@ const Register = () => {
 
     try {
       await register({ username, password });
-    } catch {
+      setError(null);
+    } catch (err) {
+      setError(err.message);
       // Error is handled in the hook.
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center gap-8 items-center min-h-screen">
+      <h1 className="text-2xl font-bold">Chat With Gemini</h1>
       <Card className="w-80">
         <form onSubmit={handleSignUp}>
           <CardHeader>
@@ -43,12 +47,7 @@ const Register = () => {
           <CardContent className="space-y-4 pb-4">
             <div className="space-y-2">
               <Label htmlFor="signup-username">Username</Label>
-              <Input
-                id="signup-username"
-                name="username" // ✅ Fixed field name
-                placeholder="johndoe"
-                required
-              />
+              <Input id="signup-username" name="username" required />
             </div>
 
             <div className="space-y-2">
@@ -65,7 +64,7 @@ const Register = () => {
             <Button type="submit" className="w-full">
               {"Sign Up"}
             </Button>
-            {error && <div className=" text-red-500">{error.message}</div>}
+            {error && <div className=" text-red-500">{error}</div>}
             <p className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
               <Button

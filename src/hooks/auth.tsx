@@ -73,8 +73,10 @@ export const useRegister = () => {
       navigate("/");
       //   window.location.reload();
     },
-    onError: (error) => {
-      console.error("Registration failed:", error);
+    onError: (error: any) => {
+      const errorMessage =
+        error.response?.data?.detail || "Registration failed";
+      throw new Error(errorMessage);
     },
   });
 

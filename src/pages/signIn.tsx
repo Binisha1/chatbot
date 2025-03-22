@@ -36,7 +36,8 @@ const SignIn = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center gap-8 items-center min-h-screen">
+      <h1 className="text-2xl font-bold">Chat With Gemini</h1>
       <Card className="w-80">
         <form onSubmit={handleSignIn}>
           <CardHeader>
