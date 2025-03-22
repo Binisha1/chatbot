@@ -76,11 +76,9 @@ export default function ChatPage() {
     const endIndex = content.indexOf("Extraction complete!");
 
     if (startIndex === -1 || endIndex === -1) {
-      // If either phrase is missing, render content normally
       return <Markdown>{content}</Markdown>;
     }
 
-    // Ensure we include "Extraction complete!" fully
     const extractedEndIndex = endIndex + "Extraction complete!".length;
 
     const before = content.substring(0, startIndex);
@@ -91,7 +89,6 @@ export default function ChatPage() {
       <div className="prose prose-sm max-w-none">
         {before && <Markdown>{before}</Markdown>}
 
-        {/* Apply background only to the correct section */}
         {extractedPart && (
           <div className="bg-gray-200 p-4 rounded-lg">
             <Markdown>{extractedPart}</Markdown>
