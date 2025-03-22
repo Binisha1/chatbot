@@ -116,7 +116,7 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-col h-screen  w-full lg:w-3/5 mx-auto">
+      <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto  w-full lg:w-3/5 mx-auto">
         {/* Chat container */}
         <div className="flex-1 overflow-hidden  w-full mx-auto px-4 py-1 lg:py-4">
           <ScrollArea className="h-full  pr-5">
