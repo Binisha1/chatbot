@@ -86,7 +86,7 @@ export default function ChatPage() {
     const after = content.substring(extractedEndIndex);
 
     return (
-      <div className="prose prose-sm max-w-none">
+      <div className="">
         {before && <Markdown>{before}</Markdown>}
 
         {extractedPart && (
@@ -118,8 +118,8 @@ export default function ChatPage() {
 
       <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto  w-full lg:w-3/5 mx-auto">
         {/* Chat container */}
-        <div className="flex-1 overflow-hidden  w-full mx-auto px-4 py-1 lg:py-4">
-          <ScrollArea className="h-full  pr-5">
+        <div className="flex-1 overflow-hidden  w-full mx-auto md:px-4 py-1 lg:py-4">
+          <ScrollArea className="h-full  md:pr-5">
             <div className="space-y-6 pb-6">
               {messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-[50vh] text-center">
@@ -163,7 +163,7 @@ export default function ChatPage() {
                       )}
                     >
                       {msg.content ? (
-                        <div className="prose prose-sm  max-w-none">
+                        <div className="flex w-full max-w-none  [overflow-wrap:anywhere]">
                           {/* <ReactMarkdown>{msg.content}</ReactMarkdown> */}
                           <ExtractedContent content={msg.content} />
                           {/* <Markdown>{msg.content}</Markdown> */}
