@@ -53,7 +53,7 @@ export default function ChatPage() {
         const cleanChunk = chunk.replace(/data:\s*/, "").trim();
         if (!cleanChunk) continue;
 
-        botResponse += cleanChunk;
+        botResponse += cleanChunk + " ";
 
         // Update the last bot message in state properly
         setMessages((prev) =>
@@ -102,7 +102,7 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col h-screen  lg:flex-row justify-between md:pt-5 px-1 lg:px-5">
-      <h1 className="hidden lg:flex text-xl font-semibold text-primary">
+      <h1 className="hidden absolute lg:flex text-xl font-semibold text-primary">
         Chat With Gemini
       </h1>
       <header className="lg:hidden bg-white border-b py-1 pl-2 sticky top-0 z-10">
@@ -116,9 +116,9 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto  w-full lg:w-3/5 mx-auto">
+      <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto w-full mx-auto">
         {/* Chat container */}
-        <div className="flex-1 overflow-hidden  w-full mx-auto md:px-4 py-1 lg:py-4">
+        <div className="flex-1 overflow-hidden md:px-4 py-1 lg:py-4 max-w-3xl md:min-w-3xl  2xl:min-w-6xl mx-auto">
           <ScrollArea className="h-full  md:pr-5">
             <div className="space-y-6 pb-6">
               {messages.length === 0 ? (
@@ -136,7 +136,7 @@ export default function ChatPage() {
                   <div
                     key={idx}
                     className={cn(
-                      "flex items-start gap-3 max-w-3xl",
+                      "flex items-start gap-3 max-w-3xl 2xl:max-w-6xl",
                       msg.role === "user" ? "justify-end" : "justify-start"
                     )}
                   >
@@ -156,7 +156,7 @@ export default function ChatPage() {
                     </div>
                     <div
                       className={cn(
-                        "rounded-lg px-4 py-3 max-w-[85%]",
+                        "rounded-lg px-4 py-3 max-w-full",
                         msg.role === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted/50 border border-border/50"
@@ -185,7 +185,7 @@ export default function ChatPage() {
 
         {/* Input area */}
         <div className=" p-4">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-3xl 2xl:max-w-6xl mx-auto">
             <div className="relative">
               <Input
                 value={input}
@@ -215,7 +215,7 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
-      <div className="hidden lg:flex items-start">
+      <div className="hidden absolute right-5 lg:flex items-start">
         <LogOut />
       </div>
     </div>
