@@ -101,12 +101,12 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen  lg:flex-row justify-between md:pt-5 px-1 lg:px-5">
+    <div className="flex flex-col h-screen w-full lg:flex-row justify-between md:pt-5 px-1 lg:px-5">
       <h1 className="hidden absolute lg:flex text-xl font-semibold text-primary">
         Chat With Gemini
       </h1>
-      <header className="lg:hidden bg-white border-b py-1 pl-2 sticky top-0 z-10">
-        <div className="flex items-center justify-between  mx-auto">
+      <header className="lg:hidden bg-white border-b py-1 pl-2 sticky top-0 z-10 w-full">
+        <div className="flex items-center justify-between mx-auto w-full">
           <h1 className="text-xl font-semibold text-primary">
             Chat With Gemini
           </h1>
@@ -116,13 +116,13 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto w-full mx-auto">
+      <div className="flex flex-col h-[calc(100vh-64px)] lg:h-auto max-w-3xl xl:max-w-5xl  w-full mx-auto">
         {/* Chat container */}
-        <div className="flex-1 overflow-hidden md:px-4 py-1 lg:py-4 max-w-3xl md:min-w-3xl  2xl:min-w-6xl mx-auto">
-          <ScrollArea className="h-full  md:pr-5">
-            <div className="space-y-6 pb-6">
+        <div className="w-full max-w-6xl h-full mx-auto">
+          <ScrollArea className="h-full w-full md:pr-5">
+            <div className="space-y-6 pb-6 w-full">
               {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-[50vh] text-center">
+                <div className="flex flex-col items-center justify-center h-[50vh] text-center w-full">
                   <Bot className="h-16 w-16 text-primary/20 mb-4" />
                   <h3 className="text-xl font-medium text-primary">
                     How can I help you today?
@@ -136,7 +136,7 @@ export default function ChatPage() {
                   <div
                     key={idx}
                     className={cn(
-                      "flex items-start gap-3 max-w-3xl 2xl:max-w-6xl",
+                      "flex items-start gap-3 w-full",
                       msg.role === "user" ? "justify-end" : "justify-start"
                     )}
                   >
@@ -156,18 +156,15 @@ export default function ChatPage() {
                     </div>
                     <div
                       className={cn(
-                        "rounded-lg px-4 py-3 max-w-full",
+                        "rounded-lg px-4 py-3 max-w-full w-fit",
                         msg.role === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted/50 border border-border/50"
                       )}
                     >
                       {msg.content ? (
-                        <div className="flex w-full max-w-none  [overflow-wrap:anywhere]">
-                          {/* <ReactMarkdown>{msg.content}</ReactMarkdown> */}
+                        <div className="flex w-full max-w-none [overflow-wrap:anywhere]">
                           <ExtractedContent content={msg.content} />
-                          {/* <Markdown>{msg.content}</Markdown> */}
-                          {/* convert({msg.content}) */}
                         </div>
                       ) : (
                         <div className="flex items-center justify-center h-6">
@@ -184,14 +181,14 @@ export default function ChatPage() {
         </div>
 
         {/* Input area */}
-        <div className=" p-4">
-          <div className="max-w-3xl 2xl:max-w-6xl mx-auto">
-            <div className="relative">
+        <div className="p-4 w-full">
+          <div className="max-w-6xl w-full mx-auto">
+            <div className="relative w-full">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message..."
-                className="pr-20 py-6 bg-background border-black border-2 focus:outline-none focus:ring-0 focus:border-black"
+                className="pr-20 py-6 bg-background border-black border-2 w-full focus:outline-none focus:ring-0 focus:border-black"
                 onKeyDown={(e) =>
                   e.key === "Enter" && !e.shiftKey && sendMessage()
                 }
@@ -215,6 +212,7 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
+
       <div className="hidden absolute right-5 lg:flex items-start">
         <LogOut />
       </div>
